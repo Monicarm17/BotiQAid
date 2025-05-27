@@ -39,6 +39,8 @@
 
     iframe { width: 100%; height: 200px; border: none; border-radius: 8px; margin-bottom: 10px; }
 
+    .alerta-vencimiento { background-color: #ffcccc; color: #b30000; border: 2px solid #b30000; padding: 1em; margin: 1em 0; border-radius: 8px; font-weight: bold; text-align: center; }
+
   </style>
 
 </head>
@@ -68,77 +70,79 @@
       <h1>Inventario del Botiquín</h1>
       <h4>Aquí encontraras todos los insumos necesarios para prestar los primeros auxilios</h4>
       <div class="grid">
-        <div class="item">
+        <div class="item" data-expiration="2028-02-04>
           <h2>Gasas estériles limpias</h2>
           <img src="Esparadrapo.jpg" alt="Esparadrapo">
           <p>PAQUETES: 1 </p>
           <p>CANTIDAD POR PAQUETE: 20 Unidades</p>
         </div>
-        <div class="item">
+        <div class="item" data-expiration="2027-03-12">
           <h2>Esparadrapo Tela Blanco 4x5 Yardas</h2>
           <img src="Gasas limpias.jpg" alt="Gasas">
           <p>PAQUETES: 1 </p>
           <p>CANTIDAD POR PAQUETE: 1 Unidad</p>
         </div>
-        <div class="item">
+        <div class="item" data-expiration="2029-09-20">
           <h2>Bajalenguas desechable</h2>
           <img src="Bajalenguas.jpg" alt="Bajalenguas">
           <p>PAQUETES: 1 </p>
           <p>CANTIDAD POR PAQUETE: 20 Unidades</p>
         </div>
-        <div class="item">
+        <div class="item" data-expiration="2027-11-17">
            <h2>Guantes de Latex</h2>
           <img src="Guantes de latex.jpg" alt="Guantes" >
           <p>PAQUETES: 1 </p>
          <p>CANTIDAD POR PAQUETE: 100 Unidades</p>
         </div>
-        <div class="item">
+        <div class="item" data-expiration="2028-08-15">
          <h2>Venda elástica 2 x 5 yardas</h2>
          <img src="venda elastica2x5.jpg" alt="venda" >
          <p>PAQUETES: 1 </p>
          <p>CANTIDAD POR PAQUETE: 1 Unidad</p>
        </div>
-       <div class="item">
+       <div class="item" data-expiration="2028-08-15">
          <h2>Venda elástica 3 x 5 yardas</h2>
          <img src="vendaelastica3x5.jpg" alt="vendaelastica3x5" >
          <p>PAQUETES: 1 </p>
          <p>CANTIDAD POR PAQUETE: 1 Unidad</p>
        </div>
-       <div class="item">
+       <div class="item" data-expiration="2028-08-15">
         <h2>Venda elástica 5 x 5 yardas</h1>
          <img src="vendaelastica5x5.jpg" alt="vendaelastica5x5" >
          <p>PAQUETES: 1 </p>
          <p>CANTIDAD POR PAQUETE: 1 Unidad</p>
        </div>
-       <div class="item">
+       <div class="item" data-expiration="2028-09-25">
          <h2>Venda de algodón 3 x 5 yardas</h2>
          <img src="algodonlaminado3x5.jpg" alt="algodonlaminado3x5" >
          <p>PAQUETES: 1 </p>
          <p>CANTIDAD POR PAQUETE: 1 Unidad</p>
        </div>
-       <div class="item">
+       <div class="item" data-expiration="2025-06-01">
          <h2>Yodopovidona (jabón quirúrgico)</h2>
          <img src="yodopovidona.jpg" alt="yodopovidona" >
          <p>FRASCO: 1 </p>
          <p>CANTIDAD POR FRASCO: 120 ml</p>
        </div>
-       <div class="item">
+       <div class="item" data-expiration="2026-06-20">
          <h2>Solución salina</h2>
          <img src="soluciónsalina.jpg" alt="soluciónsalina" >
          <p>PAQUETES: 2 </p>
          <p>CANTIDAD POR PAQUETE: 1 Unidad</p>
        </div>
-       <div class="item">
+       <div class="item" data-expiration="2027-03-12">
          <h2>Termómetro digital unidad</h2>
          <img src="termómetro.jpg" alt="termómetro" >
          <p>PAQUETES: 1 </p>
          <p>CANTIDAD POR PAQUETE: 1 Unidad</p>
+         <p>FECHA DE VENCIMIENTO: 01/06/2025</p>
        </div>
-       <div class="item">
+       <div class="item" data-expiration="2027-06-01">
          <h2>Alcohol antiséptico </h2>
          <img src="alcohol.jpg" alt="alcohol" >
          <p>FRASCO: 1 </p>
          <p>CANTIDAD POR FRASCO: 275 ml</p>
+         <p>FECHA DE VENCIMIENTO: 01/06/2025</p>
     </section>
 
    <!-- Emergencias --> 
@@ -226,11 +230,36 @@
     </section>
   </div>
  </div>
-  <script>
-    function mostrar(seccion) {
-      document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
-      document.getElementById(seccion).classList.remove('hidden'); }
-  </script>
+ <script>
+  function mostrar(seccion) {
+    document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
+    document.getElementById(seccion).classList.remove('hidden');
+  }
+
+  function verificarVencimientos() {
+    const hoy = new Date();
+    const items = document.querySelectorAll('.item[data-expiration]');
+
+    items.forEach(item => {
+      const fechaStr = item.getAttribute('data-expiration');
+      const fechaVencimiento = new Date(fechaStr);
+
+      // Si el medicamento está vencido o vence en los próximos 30 días
+      const diffTime = fechaVencimiento - hoy;
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+      if (diffDays <= 0) {
+        alert("⚠️ El medicamento '" + item.querySelector('h2').textContent + "' está VENCIDO.");
+      } else if (diffDays <= 30) {
+        alert("⏳ El medicamento '" + item.querySelector('h2').textContent + "' vencerá en " + diffDays + " días.");
+      }
+    });
+  }
+
+  // Ejecutar al cargar la página
+  window.addEventListener('DOMContentLoaded', verificarVencimientos);
+</script>
+
   
   <footer style="background-color: #a7e7ff; color: #000000; padding: 1em; text-align: center;">
     <hr style="border: 1px solid white; margin: 1em 0;">
