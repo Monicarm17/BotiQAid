@@ -19,7 +19,7 @@
 
     .hidden { display: none; }
 
-    h2  { border: 2px solid #000000; padding: 10px; border-radius: 6px; background-color: #e2e2e8; color: #000000; text-align: center; } 
+    h2  { border: 2px solid #000000; padding: 12px; border-radius: 4px; background-color: #e2e2e8; color: #000000; text-align: center; }
 
     h3 { border: 2px solid #5db3d2; padding: 10px; border-radius: 6px; background-color: #a7e7ff; color: #000000; text-align: center;}
     
@@ -234,32 +234,39 @@
   function mostrar(seccion) {
     document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
     document.getElementById(seccion).classList.remove('hidden');
+
+    if (seccion === 'inventario') {
+      mostrarAlertasDeVencimiento();
+    }
   }
 
-  function verificarVencimientos() {
+  function mostrarAlertasDeVencimiento() {
+    const alertas = document.getElementById("alertas-vencimiento");
+    alertas.innerHTML = ""; // Limpia anteriores
+
     const hoy = new Date();
-    const items = document.querySelectorAll('.item[data-expiration]');
+    const items = [
+      { nombre: "Yodopovidona", vence: "2025-06-01" },
+      { nombre: "Solución salina", vence: "2025-07-01" },
+      { nombre: "Alcohol antiséptico", vence: "2025-06-05" }
+    ];
 
     items.forEach(item => {
-      const fechaStr = item.getAttribute('data-expiration');
-      const fechaVencimiento = new Date(fechaStr);
+      const fechaVencimiento = new Date(item.vence);
+      const diasRestantes = Math.ceil((fechaVencimiento - hoy) / (1000 * 60 * 60 * 24));
 
-      // Si el medicamento está vencido o vence en los próximos 30 días
-      const diffTime = fechaVencimiento - hoy;
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-      if (diffDays <= 0) {
-        alert("⚠️ El medicamento '" + item.querySelector('h2').textContent + "' está VENCIDO.");
-      } else if (diffDays <= 30) {
-        alert("⏳ El medicamento '" + item.querySelector('h2').textContent + "' vencerá en " + diffDays + " días.");
+      if (diasRestantes > 0 && diasRestantes <= 30) {
+        const div = document.createElement("div");
+        div.className = "alerta-vencimiento";
+        div.textContent = `⚠ El medicamento "${item.nombre}" vence en ${diasRestantes} días (${item.vence})`;
+        alertas.appendChild(div);
       }
     });
   }
-
-  // Ejecutar al cargar la página
-  window.addEventListener('DOMContentLoaded', verificarVencimientos);
-</script>
-
+ </script>
+ <div id="alerta-vencimiento" style="display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #ffcccc; color: #b30000; padding: 15px 25px; border: 2px solid #b30000; border-radius: 10px; font-weight: bold; z-index: 1000; box-shadow: 0px 0px 10px rgba(0,0,0,0.3); ">
+   ⚠️ ¡Hay medicamentos vencidos en tu botiquín! 
+  </div>
   
   <footer style="background-color: #a7e7ff; color: #000000; padding: 1em; text-align: center;">
     <hr style="border: 1px solid white; margin: 1em 0;">
