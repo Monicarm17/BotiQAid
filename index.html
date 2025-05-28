@@ -19,7 +19,7 @@
 
     .hidden { display: none; }
 
-    h2  { border: 2px solid #000000; padding: 12px; border-radius: 4px; background-color: #e2e2e8; color: #000000; text-align: center; }
+    h2  { border: 2px solid #000000; padding: 12px; border-radius: 4px; background-color: #e2e2e8; color: #000000; text-align: center; } 
 
     h3 { border: 2px solid #5db3d2; padding: 10px; border-radius: 6px; background-color: #a7e7ff; color: #000000; text-align: center;}
     
@@ -39,7 +39,13 @@
 
     iframe { width: 100%; height: 200px; border: none; border-radius: 8px; margin-bottom: 10px; }
 
-    .alerta-vencimiento { background-color: #ffcccc; color: #b30000; border: 2px solid #b30000; padding: 1em; margin: 1em 0; border-radius: 8px; font-weight: bold; text-align: center; }
+    .alerta-vencimiento { background-color: #ffcccc; color: #b30000; border: 2px solid #b30000; padding: 10px; margin-bottom: 10px; border-radius: 6px; margin-bottom: 10px; font-weight: bold; text-align: center; }
+  
+    #med-form-container { background-color: #a7e7ff; border: 1px solid #9cc9da; border-radius: 8px; padding: 10px; max-width: 170px; margin: 20px auto; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08); font-family: sans-serif; font-size: 10px;}
+
+    #med-form label { display: block; margin: 6px 0 4px; }
+
+    #med-form input { width: 90%; padding: 6px; font-size: 10px; border: 1px soli }
 
   </style>
 
@@ -53,97 +59,129 @@
    </td>
   </header>
   <nav>
-   <button onclick="mostrar('inicio')" >Inicio</button>
-   <button onclick="mostrar('inventario')">Inventario</button>
-   <button onclick="mostrar('emergencias')">Emergencias</button>
+    <button onclick="mostrar('inicio')">Inicio</button>
+    <button onclick="mostrar('inventario')">Inventario</button>
+    <button onclick="mostrar('emergencias')">Emergencias</button>
   </nav>
-  <!-- Inicio --> 
- <div class="content">
-    <section id="inicio">
-      <h1>Bienvenido al tu botiquin virtual BotiQAid</h1>
-      <h4>BotiQAid es un botiquín inteligente que ayuda a tener un control sobre los medicamentos y herramientas necesarias para prestar los primeros auxilios. Ayudando a que las personas sepan actuar correctamente  en momento de emergencia. </h4>
-      <center><img src="lineas Emergencias .jpg"  width="600"></center>
-    </section>
+    <!-- Inicio --> 
+   <div class="content">
+      <section id="inicio">
+       <h1>Bienvenido al tu botiquin virtual BotiQAid</h1>
+       <h4>BotiQAid es un botiquín inteligente que ayuda a tener un control sobre los medicamentos y herramientas necesarias para prestar los primeros auxilios. Ayudando a que las personas sepan actuar correctamente  en momento de emergencia. </h4>
+       <center><img src="lineas Emergencias .jpg"  width="600"></center>
+      </section>
+    </div>
     
    <!-- Inventario --> 
-    <section id="inventario" class="hidden">
+    <section id="inventario" class="content">
+      <div id="med-list"></div>
       <h1>Inventario del Botiquín</h1>
       <h4>Aquí encontraras todos los insumos necesarios para prestar los primeros auxilios</h4>
       <div id="alertas-vencimiento"></div>
+       <div id="med-form-container">
+         <h2>Agregar Medicamento</h2>
+         <form id="med-form">
+           <label for="med-name">Nombre del medicamento:</label>
+           <input type="text" id="med-name" required>
+
+           <label for="med-qty">Cantidad:</label>
+           <input type="number" id="med-qty" required>
+
+           <label for="med-expiry">Fecha de vencimiento:</label>
+           <input type="date" id="med-expiry" required>
+
+           <label for="med-img">Imagen:</label>
+           <input type="file" id="med-img" accept="image/*">
+
+           <button type="submit">Agregar</button>
+          </form>
+       </div>
       <div class="grid">
         <div class="item" data-expiration="2028-02-04">
           <h2>Gasas estériles limpias</h2>
           <img src="Esparadrapo.jpg" alt="Esparadrapo">
           <p>PAQUETES: 1 </p>
           <p>CANTIDAD POR PAQUETE: 20 Unidades</p>
+          <p>FECHA DE VENCIMIENTO: 02/04/2028</p>
         </div>
         <div class="item" data-expiration="2027-03-12">
           <h2>Esparadrapo Tela Blanco 4x5 Yardas</h2>
           <img src="Gasas limpias.jpg" alt="Gasas">
           <p>PAQUETES: 1 </p>
           <p>CANTIDAD POR PAQUETE: 1 Unidad</p>
+          <p>FECHA DE VENCIMIENTO: 12/03/2027</p>
         </div>
         <div class="item" data-expiration="2029-09-20">
           <h2>Bajalenguas desechable</h2>
           <img src="Bajalenguas.jpg" alt="Bajalenguas">
           <p>PAQUETES: 1 </p>
           <p>CANTIDAD POR PAQUETE: 20 Unidades</p>
+          <p>FECHA DE VENCIMIENTO: 20/09/2029</p>
         </div>
         <div class="item" data-expiration="2027-11-17">
            <h2>Guantes de Latex</h2>
           <img src="Guantes de latex.jpg" alt="Guantes" >
           <p>PAQUETES: 1 </p>
          <p>CANTIDAD POR PAQUETE: 100 Unidades</p>
+         <p>FECHA DE VENCIMIENTO: 17/11/2027</p>
         </div>
         <div class="item" data-expiration="2028-08-15">
          <h2>Venda elástica 2 x 5 yardas</h2>
          <img src="venda elastica2x5.jpg" alt="venda" >
          <p>PAQUETES: 1 </p>
          <p>CANTIDAD POR PAQUETE: 1 Unidad</p>
+         <p>FECHA DE VENCIMIENTO: 15/08/2028</p>
        </div>
        <div class="item" data-expiration="2028-08-15">
          <h2>Venda elástica 3 x 5 yardas</h2>
          <img src="vendaelastica3x5.jpg" alt="vendaelastica3x5" >
          <p>PAQUETES: 1 </p>
          <p>CANTIDAD POR PAQUETE: 1 Unidad</p>
+         <p>FECHA DE VENCIMIENTO: 15/08/2028</p>
        </div>
        <div class="item" data-expiration="2028-08-15">
         <h2>Venda elástica 5 x 5 yardas</h1>
          <img src="vendaelastica5x5.jpg" alt="vendaelastica5x5" >
          <p>PAQUETES: 1 </p>
          <p>CANTIDAD POR PAQUETE: 1 Unidad</p>
+         <p>FECHA DE VENCIMIENTO: 15/08/2028</p>
        </div>
-       <div class="item" data-expiration="2028-09-25">
+       <div class="item" data-expiration="2029-09-25">
          <h2>Venda de algodón 3 x 5 yardas</h2>
          <img src="algodonlaminado3x5.jpg" alt="algodonlaminado3x5" >
          <p>PAQUETES: 1 </p>
          <p>CANTIDAD POR PAQUETE: 1 Unidad</p>
+         <p>FECHA DE VENCIMIENTO: 25/09/2029</p>
        </div>
        <div class="item" data-expiration="2025-06-01">
          <h2>Yodopovidona (jabón quirúrgico)</h2>
          <img src="yodopovidona.jpg" alt="yodopovidona" >
          <p>FRASCO: 1 </p>
          <p>CANTIDAD POR FRASCO: 120 ml</p>
+         <p>FECHA DE VENCIMIENTO: 01/06/2025</p>
        </div>
-       <div class="item" data-expiration="2026-06-20">
+       <div class="item" data-expiration="2027-07-01">
          <h2>Solución salina</h2>
          <img src="soluciónsalina.jpg" alt="soluciónsalina" >
          <p>PAQUETES: 2 </p>
          <p>CANTIDAD POR PAQUETE: 1 Unidad</p>
+         <p>FECHA DE VENCIMIENTO: 01/07/2027</p>
        </div>
        <div class="item" data-expiration="2027-03-12">
          <h2>Termómetro digital unidad</h2>
          <img src="termómetro.jpg" alt="termómetro" >
          <p>PAQUETES: 1 </p>
          <p>CANTIDAD POR PAQUETE: 1 Unidad</p>
-         <p>FECHA DE VENCIMIENTO: 01/06/2025</p>
+         <p>FECHA DE VENCIMIENTO: 12/03/2027</p>
        </div>
-       <div class="item" data-expiration="2027-06-01">
+       <div class="item" data-expiration="2025-06-05">
          <h2>Alcohol antiséptico </h2>
          <img src="alcohol.jpg" alt="alcohol" >
          <p>FRASCO: 1 </p>
          <p>CANTIDAD POR FRASCO: 275 ml</p>
-         <p>FECHA DE VENCIMIENTO: 01/06/2025</p>
+         <p>FECHA DE VENCIMIENTO: 05/06/2025</p>
+       </div>
+      </div>
     </section>
 
    <!-- Emergencias --> 
@@ -264,14 +302,68 @@
       }
     });
   }
+  document.getElementById('med-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const name = document.getElementById('med-name').value;
+    const qty = document.getElementById('med-qty').value;
+    const expiry = document.getElementById('med-expiry').value;
+    const imgInput = document.getElementById('med-img');
+
+    const reader = new FileReader();
+    reader.onload = function (event) {
+      const imageUrl = event.target.result;
+      crearMedicamento(name, qty, expiry, imageUrl);
+    };
+
+    if (imgInput.files[0]) {
+      reader.readAsDataURL(imgInput.files[0]);
+    } else {
+      crearMedicamento(name, qty, expiry, 'default-image.jpg');
+    }
+
+    function crearMedicamento(nombre, cantidad, fechaVencimiento, imagenUrl) {
+      const newMed = document.createElement('div');
+      newMed.className = 'item';
+      newMed.setAttribute('data-expiration', fechaVencimiento);
+
+      const fechaVenc = new Date(fechaVencimiento);
+      const hoy = new Date();
+      const diferenciaDias = Math.ceil((fechaVenc - hoy) / (1000 * 60 * 60 * 24));
+
+      let alertaHTML = '';
+      if (diferenciaDias <= 30) {
+        newMed.style.backgroundColor = '#ffcccc';
+        newMed.style.border = '2px solid red';
+
+        alertaHTML = `
+          <p style="color: red; font-weight: bold; margin-top: 10px;">
+            ⚠️ ¡Próximo a vencer en ${diferenciaDias} día${diferenciaDias !== 1 ? 's' : ''}!
+          </p>
+        `;
+      }
+
+      newMed.innerHTML = `
+        <h2>${nombre}</h2>
+        <img src="${imagenUrl}" alt="${nombre}">
+        <p>PAQUETES: 1</p>
+        <p>CANTIDAD POR PAQUETE: ${cantidad} Unidades</p>
+        <p>FECHA DE VENCIMIENTO: ${fechaVenc.toLocaleDateString()}</p>
+        ${alertaHTML}
+      `;
+
+      document.querySelector('.grid').appendChild(newMed);
+      document.getElementById('med-form').reset();
+    }
+  });
  </script>
- <div id="alerta-vencimiento" style="display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #ffcccc; color: #b30000; padding: 15px 25px; border: 2px solid #b30000; border-radius: 10px; font-weight: bold; z-index: 1000; box-shadow: 0px 0px 10px rgba(0,0,0,0.3); ">
-   ⚠️ ¡Hay medicamentos vencidos en tu botiquín! 
-  </div>
-  
+
   <footer style="background-color: #a7e7ff; color: #000000; padding: 1em; text-align: center;">
     <hr style="border: 1px solid white; margin: 1em 0;">
     <p>&copy; BotiQAid Todos los derechos reservados.</p>
   </footer>
+  <div id="alerta-vencimiento" style="display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #ffcccc; color: #b30000; padding: 15px 25px; border: 2px solid #b30000; border-radius: 10px; font-weight: bold; z-index: 1000; box-shadow: 0px 0px 10px rgba(0,0,0,0.3); ">
+   ⚠️ ¡Hay medicamentos vencidos en tu botiquín! 
+  </div>
 </body>
 </html>
